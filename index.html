@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscription — Élite Bartender 221</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:    #080808;
+    --deep:     #0f0f0f;
+    --card:     #141414;
+    --card2:    #1a1a1a;
+    --gold:     #C9A84C;
+    --gold-l:   #E2C97A;
+    --gold-d:   #9A7A30;
+    --white:    #F0EBE0;
+    --muted:    #888880;
+    --border:   rgba(201,168,76,0.35);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(201,168,76,0.015) 4px, rgba(201,168,76,0.015) 5px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .glass-svg {
+    display: block;
+    margin: 0 auto 12px;
+  }
+
+  .brand-elite {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: clamp(38px, 8vw, 54px);
+    color: var(--white);
+    letter-spacing: 10px;
+    line-height: 1;
+  }
+
+  .brand-bar {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    width: 140px;
+    margin: 8px auto;
+  }
+
+  .brand-bartender {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(22px, 5vw, 32px);
+    color: var(--gold);
+    letter-spacing: 8px;
+  }
+
+  .brand-221 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--white);
+    letter-spacing: 6px;
+    margin-top: 4px;
+  }
+
+  .sep {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 20px 0;
+  }
+  .sep .ln { flex: 1; height: 1px; background: var(--border); }
+  .sep .dm {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    margin: 0 10px;
+    flex-shrink: 0;
+  }
+
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .form-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 4px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px 28px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  .card-label {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-1 { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (max-width: 520px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* ── FIELD ── */
+  .field { display: flex; flex-direction: column; gap: 6px; }
+
+  label {
+    font-family: 'Cinzel', serif;
+    font-size: 8.5px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  label span.req { color: var(--gold); margin-left: 2px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  select,
+  textarea {
+    background: var(--card2);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 3px;
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    padding: 10px 14px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    -webkit-appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(201,168,76,0.12);
+  }
+
+  input::placeholder, textarea::placeholder { color: #444; }
+
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  select option { background: #1a1a1a; color: var(--white); }
+
+  textarea { resize: vertical; min-height: 80px; }
+
+  /* ── RADIO GROUP ── */
+  .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 2px;
+  }
+
+  .radio-option {
+    position: relative;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .radio-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0; height: 0;
+  }
+
+  .radio-option label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    background: var(--card2);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    transition: all 0.2s;
+    text-align: center;
+    width: 100%;
+  }
+
+  .radio-option input[type="radio"]:checked + label {
+    background: rgba(201,168,76,0.12);
+    border-color: var(--gold);
+    color: var(--gold-l);
+  }
+
+  .radio-option label:hover {
+    border-color: rgba(201,168,76,0.5);
+    color: var(--white);
+  }
+
+  /* ── CHECKBOX ── */
+  .checkbox-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .checkbox-wrap input[type="checkbox"] {
+    appearance: none;
+    width: 18px; height: 18px;
+    min-width: 18px;
+    background: var(--card2);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    margin-top: 2px;
+    transition: all 0.2s;
+  }
+
+  .checkbox-wrap input[type="checkbox"]:checked {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .checkbox-wrap input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .checkbox-wrap p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .checkbox-wrap p strong { color: var(--white); }
+
+  /* ── SUBMIT ── */
+  .submit-wrap { text-align: center; margin-top: 24px; }
+
+  button[type="submit"] {
+    background: var(--gold);
+    color: #000;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 3px;
+    border: none;
+    border-radius: 4px;
+    padding: 16px 48px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button[type="submit"]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+
+  button[type="submit"]:hover {
+    background: var(--gold-l);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(201,168,76,0.35);
+  }
+
+  button[type="submit"]:active { transform: translateY(0); }
+
+  button[type="submit"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ── SUCCESS / ERROR MESSAGES ── */
+  .msg {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    border-radius: 4px;
+    margin-top: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .msg.success {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--gold);
+    color: var(--gold-l);
+  }
+
+  .msg.error {
+    background: rgba(180,50,50,0.1);
+    border: 1px solid #b43232;
+    color: #e07070;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    margin-top: 36px;
+  }
+
+  footer p {
+    font-family: 'Cinzel', serif;
+    font-size: 7px;
+    letter-spacing: 2px;
+    color: #444;
+  }
+
+  footer .contact {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ── INFO BOX ── */
+  .info-banner {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .info-banner strong { color: var(--gold-l); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <header>
+    <svg class="glass-svg" width="44" height="52" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="2,2 42,2 22,32" stroke="#C9A84C" stroke-width="2" fill="#C9A84C" fill-opacity="0.8"/>
+      <line x1="22" y1="32" x2="22" y2="46" stroke="#C9A84C" stroke-width="2"/>
+      <line x1="12" y1="46" x2="32" y2="46" stroke="#C9A84C" stroke-width="2"/>
+      <circle cx="34" cy="10" r="3.5" fill="#C9A84C"/>
+    </svg>
+    <div class="brand-elite">ÉLITE</div>
+    <div class="brand-bar"></div>
+    <div class="brand-bartender">BARTENDER</div>
+    <div class="brand-221">· <em>221</em> ·</div>
+    <div class="sep" style="margin: 16px auto; max-width: 340px;">
+      <div class="ln"></div><div class="dm"></div><div class="ln"></div>
+    </div>
+    <p class="header-sub">Dakar, Sénégal &nbsp;·&nbsp; Formation Professionnelle Internationale</p>
+  </header>
+
+  <div class="form-title">✦ FICHE D'INSCRIPTION ✦</div>
+
+  <!-- INFO -->
+  <div class="info-banner">
+    <strong>Formation intensive · 1 mois</strong><br>
+    Lundi → Vendredi &nbsp;|&nbsp; 10h00 – 15h00 &nbsp;|&nbsp; Cours en Français<br>
+    Programme aligné sur l'<strong>European Bartender School (EBS)</strong>
+  </div>
+
+  <!-- FORMULAIRE -->
+  <form id="inscriptionForm" action="https://formspree.io/f/xjgqgbyl" method="POST">
+
+    <!-- Champ caché pour redirection -->
+    <input type="hidden" name="_subject" value="Nouvelle inscription — Élite Bartender 221">
+    <input type="hidden" name="_next" value="">
+
+    <!-- 1. INFORMATIONS PERSONNELLES -->
+    <div class="card">
+      <div class="card-label">01 &nbsp; Informations personnelles</div>
+      <div class="grid-2" style="margin-bottom:14px;">
+        <div class="field">
+          <label>Prénom <span class="req">*</span></label>
+          <input type="text" name="prenom" placeholder="Votre prénom" required>
+        </div>
+        <div class="field">
+          <label>Nom <span class="req">*</span></label>
+          <input type="text" name="nom" placeholder="Votre nom" required>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-bottom:14px;">
+        <div class="field">
+          <label>Date de naissance <span class="req">*</span></label>
+          <input type="text" name="date_naissance" placeholder="JJ/MM/AAAA" required>
+        </div>
+        <div class="field">
+          <label>Sexe</label>
+          <select name="sexe">
+            <option value="">— Sélectionner —</option>
+            <option value="Homme">Homme</option>
+            <option value="Femme">Femme</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-1">
+        <div class="field">
+          <label>Adresse / Quartier <span class="req">*</span></label>
+          <input type="text" name="adresse" placeholder="Ex : Plateau, Parcelles Assainies..." required>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. CONTACT -->
+    <div class="card">
+      <div class="card-label">02 &nbsp; Coordonnées</div>
+      <div class="grid-2" style="margin-bottom:14px;">
+        <div class="field">
+          <label>Téléphone <span class="req">*</span></label>
+          <input type="tel" name="telephone" placeholder="7X XXX XX XX" required>
+        </div>
+        <div class="field">
+          <label>WhatsApp</label>
+          <input type="tel" name="whatsapp" placeholder="7X XXX XX XX">
+        </div>
+      </div>
+      <div class="grid-1">
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="votre@email.com">
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. PROFIL -->
+    <div class="card">
+      <div class="card-label">03 &nbsp; Profil & expérience</div>
+      <div class="field" style="margin-bottom:14px;">
+        <label>Niveau d'études</label>
+        <select name="niveau_etudes">
+          <option value="">— Sélectionner —</option>
+          <option>Aucun diplôme</option>
+          <option>BFEM / Brevet</option>
+          <option>Baccalauréat</option>
+          <option>BTS / Licence</option>
+          <option>Master et plus</option>
+        </select>
+      </div>
+      <div class="field" style="margin-bottom:14px;">
+        <label>Expérience en bar / restauration</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="experience" id="exp0" value="Aucune expérience">
+            <label for="exp0">Aucune</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="experience" id="exp1" value="Moins d'1 an">
+            <label for="exp1">Moins d'1 an</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="experience" id="exp2" value="1 à 3 ans">
+            <label for="exp2">1 – 3 ans</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="experience" id="exp3" value="Plus de 3 ans">
+            <label for="exp3">+ 3 ans</label>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Comment avez-vous connu la formation ?</label>
+        <select name="source">
+          <option value="">— Sélectionner —</option>
+          <option>Instagram</option>
+          <option>Facebook</option>
+          <option>WhatsApp</option>
+          <option>Bouche à oreille</option>
+          <option>Autre</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 4. MOTIVATION -->
+    <div class="card">
+      <div class="card-label">04 &nbsp; Motivation</div>
+      <div class="field">
+        <label>Pourquoi souhaitez-vous rejoindre Élite Bartender 221 ?</label>
+        <textarea name="motivation" placeholder="Décrivez votre motivation en quelques lignes..."></textarea>
+      </div>
+    </div>
+
+    <!-- 5. ENGAGEMENT -->
+    <div class="card">
+      <div class="card-label">05 &nbsp; Engagement</div>
+      <div class="checkbox-wrap" style="margin-bottom:12px;">
+        <input type="checkbox" id="dispo" name="disponibilite" required>
+        <p>Je confirme être <strong>disponible du lundi au vendredi, de 10h à 15h</strong> pour toute la durée de la formation.</p>
+      </div>
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="reglement" name="reglement" required>
+        <p>Je m'engage à respecter les règles de la formation : <strong>discipline, ponctualité et professionnalisme</strong>.</p>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+      <button type="submit" id="submitBtn">ENVOYER MA CANDIDATURE</button>
+    </div>
+
+    <div class="msg success" id="successMsg">
+      ✦ &nbsp; Inscription reçue avec succès !<br>
+      <span style="font-size:9px; letter-spacing:1px; color: #c0aa70;">Vous serez contacté(e) très prochainement au numéro indiqué.</span>
+    </div>
+    <div class="msg error" id="errorMsg">
+      Une erreur est survenue. Veuillez réessayer ou contacter le 77 850 67 41.
+    </div>
+
+  </form>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="sep" style="margin: 28px auto 16px; max-width: 340px;">
+      <div class="ln"></div><div class="dm"></div><div class="ln"></div>
+    </div>
+    <p>ÉLITE BARTENDER 221 &nbsp;·&nbsp; DAKAR, SÉNÉGAL &nbsp;·&nbsp; FORMATION PROFESSIONNELLE INTERNATIONALE</p>
+    <p class="contact" style="margin-top:8px;">📞 &nbsp; 77 850 67 41</p>
+    <p style="margin-top:6px; font-size:7px; color:#333;">Partenaires : GROOV &nbsp;·&nbsp; GIFFARD &nbsp;·&nbsp; BAR PREMIUM PERU</p>
+  </footer>
+
+</div>
+
+<script>
+  const form = document.getElementById('inscriptionForm');
+  const btn  = document.getElementById('submitBtn');
+  const ok   = document.getElementById('successMsg');
+  const err  = document.getElementById('errorMsg');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'ENVOI EN COURS...';
+    ok.style.display = 'none';
+    err.style.display = 'none';
+
+    // Collect all form data
+    const data = new FormData(form);
+
+    // Build email body
+    const fields = [];
+    for (let [key, val] of data.entries()) {
+      if (key.startsWith('_')) continue;
+      const label = key.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase());
+      fields.push(`${label}: ${val}`);
+    }
+
+    // Send via Formspree
+    try {
+      const res = await fetch('https://formspree.io/f/xjgqgbyl', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        ok.style.display = 'block';
+        form.reset();
+        btn.textContent = '✓ ENVOYÉ';
+        btn.style.background = '#2a6a2a';
+        btn.style.color = '#fff';
+      } else {
+        throw new Error();
+      }
+    } catch {
+      // Fallback: open mailto
+      const subject = encodeURIComponent('Nouvelle inscription — Élite Bartender 221');
+      const body    = encodeURIComponent(fields.join('\n'));
+      window.location.href = `mailto:elitebartender221@outlook.fr?subject=${subject}&body=${body}`;
+      ok.style.display = 'block';
+      btn.textContent = 'ENVOYÉ';
+    }
+  });
+</script>
+</body>
+</html>
